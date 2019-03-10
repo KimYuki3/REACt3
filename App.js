@@ -2,10 +2,14 @@ import { createAppContainer, createStackNavigator } from 'react-navigation';
 import MemoListScreen from './src/screens/MemoListScreen';
 import MemoDetailScreen from './src/screens/MemoDetailScreen';
 import MemoEditScreen from './src/screens/MemoEditScreen';
+import MemoCreateScreen from './src/screens/MemoCreateScreen';
 import SighnUpScreen from './src/screens/SighnUpScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import firebase from 'firebase';
 import ENV from'./env.json';
+
+
+require("firebase/firestore");
 
 const config = {
   apiKey:       ENV.FIREBASE_API_KEY,
@@ -18,12 +22,13 @@ const config = {
   firebase.initializeApp(config);
 
 const App = createStackNavigator({
-        Login:        LoginScreen,
-      signIN:       SighnUpScreen,
 
+    Login:      LoginScreen,
+    signIN:     SighnUpScreen,
     Home:       MemoListScreen,
     MemoEdit:   MemoEditScreen,
     MemoDetail: MemoDetailScreen,
+    MemoCreate:   MemoCreateScreen,
   },
 {
   defaultNavigationOptions: {

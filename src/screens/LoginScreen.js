@@ -13,7 +13,7 @@ class LoginScreen extends React.Component {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
     .then((user)=>{
       console.log('Success!!!',user,this.state.email);
-        this.props.navigation.navigate('Home');
+        this.props.navigation.navigate('Home',{currentUser:user});
     })
     .catch((error) => {
       console.log('Error',error);
@@ -29,6 +29,7 @@ class LoginScreen extends React.Component {
       <View style={styles.Container}>
       <Text　style={styles.TEXTLOGIN}>ログイン</Text>
         <TextInput
+          name = 'Email2'
           style={styles.Input}
           value ={this.state.email}
           onChangeText = {(text)=>{this.setState({email: text})}}
@@ -51,12 +52,17 @@ class LoginScreen extends React.Component {
         >
         <Text style={styles.TextStyle}>ログインする</Text>
         </TouchableHighlight>
+
+
+
+
       </View>
+
     );
   }
 }
 
- 
+
 
 const styles = StyleSheet.create({
   Container:{
@@ -86,6 +92,17 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     height:40,
   },
+
+  ButtonStyle2:{
+      marginTop:16,
+    width:150,
+    backgroundColor:'#D31676',
+    alignSelf:"center",
+    borderRadius:16,
+    justifyContent:"center",
+    height:40,
+  },
+
   TextStyle:{
     fontSize:24,
     alignSelf:"center",
