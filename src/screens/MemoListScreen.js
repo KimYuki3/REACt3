@@ -15,12 +15,12 @@ class MemoListScreen extends React.Component {
     const db =firebase.firestore()
     db.collection(`users/${currentUser.uid}/MemoApp`)
     .get()
-    .then((snapshot) =>{
+    .then((snapshot) => {
       const memoList = [];
-      snapshot.forEach((doc)=>{
-      memoList.push(doc.data())
+      snapshot.forEach((doc) => {
+      memoList.push({ ...doc.data(), key: doc.id } );
     });
-    this.setState({memoList});
+    this.setState({ memoList });
     })
     .catch(function(error) {
         console.log("Error getting documents: ", error);
@@ -28,18 +28,14 @@ class MemoListScreen extends React.Component {
   }
 
   handlePress(){
-
-  //const { params } = this.props.navigation.state ;
-  //console.log(params);
     this.props.navigation.navigate('MemoCreate');
   }
 
   render() {
     return (
       <View style={styles.container1}>
-        <MemoList memoList = {this.state.memoList} navigation={this.props.navigation} />
+        <MemoList memoList={this.state.memoList} navigation={this.props.navigation} />
         <AddButton name ='pencil'   onPress={this.handlePress.bind(this)}/>
-
       </View>
     );
   }
