@@ -1,23 +1,43 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-//import firestore from 'firestore';
+import firebase from 'firebase';
 import MemoList from '../components/MemoList.js'
 import AddButton from '../elements/AddButton.js'
 //this.props.navigation.navigate('MemoEdit')
 //  db.settings({　timestampsInSnapshots: true　});
 //const db = firebase.firestore();
 class MemoListScreen extends React.Component {
+  state = {
+    memoList : [],
+  }
+  componentWillMount(){
+    const { currentUser } = firebase.auth();
+    const db =firebase.firestore()
+    db.collection(`users/${currentUser.uid}/MemoApp`)
+    .get()
+    .then((snapshot) =>{
+      const memoList = [];
+      snapshot.forEach((doc)=>{
+      memoList.push(doc.data())
+    });
+    this.setState({memoList});
+    })
+    .catch(function(error) {
+        console.log("Error getting documents: ", error);
+    });
+  }
+
   handlePress(){
 
-  const { params } = this.props.navigation.state ;
-  console.log(params);
-    this.props.navigation.navigate('MemoCreate',{currentUser : params.currentUser});
+  //const { params } = this.props.navigation.state ;
+  //console.log(params);
+    this.props.navigation.navigate('MemoCreate');
   }
 
   render() {
     return (
       <View style={styles.container1}>
-        <MemoList navigation={this.props.navigation} />
+        <MemoList memoList = {this.state.memoList} navigation={this.props.navigation} />
         <AddButton name ='pencil'   onPress={this.handlePress.bind(this)}/>
 
       </View>

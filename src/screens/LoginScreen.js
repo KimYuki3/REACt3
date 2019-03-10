@@ -5,15 +5,15 @@ import AddButton from '../elements/AddButton.js'
 import firebase from 'firebase';
 class LoginScreen extends React.Component {
   state = {
-    email: '',
-    password: '',
+    email: 'm@m.com',
+    password: '123456',
   }
 
   handleSubmit() {
     firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
     .then((user)=>{
       console.log('Success!!!',user,this.state.email);
-        this.props.navigation.navigate('Home',{currentUser:user});
+        this.props.navigation.navigate('Home');
     })
     .catch((error) => {
       console.log('Error',error);
